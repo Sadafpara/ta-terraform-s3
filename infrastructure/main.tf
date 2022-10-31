@@ -23,8 +23,8 @@ resource "aws_s3_bucket_versioning" "ta_s3_bucket_versioning" {
 
 resource "aws_dynamodb_table" "s3-lock-table" {
   name           = "s3-lock-table"
-  read_capacity  = 1
-  write_capacity = 1
+  read_capacity  = 2
+  write_capacity = 2
   hash_key       = "LockID"
 
   attribute {
@@ -35,3 +35,17 @@ tags = {
     Name = "s3-lock-table"
   }
 }
+
+
+# # Adding S3 bucket as trigger to my lambda and giving the permissions
+# resource "aws_s3_bucket_notification" "aws_lambda_trigger" {
+#   bucket = aws_s3_bucket.ta_s3_bucket.id
+#   lambda_function {
+#     lambda_function_arn = aws_lambda_function.test_lambda.arn
+#     events              = ["s3:ObjectCreated:*", "s3:ObjectRemoved:*"]
+
+#   }
+# }
+
+
+
